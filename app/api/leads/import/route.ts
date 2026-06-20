@@ -11,17 +11,21 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const lead = await prisma.lead.create({
-      data: {
-        leadId: body.submission_id || Date.now().toString(),
-        fullName: `${body.first_name || ""} ${body.last_name || ""}`.trim(),
-        phone: body.phone || "",
-        email: body.email || "",
-        project: body.project || "Website Inquiry",
-        source: "Contact Form 7",
-        notes: body.message || "",
-      },
-    });
+    const lead = await prisma.lead.upsert({
+  where: {
+    leadId: body.submission_id || Date.now().toString(),
+  },
+  update: {},
+  create: {
+    leadId: body.submission_id || Date.now().toString(),
+    fullName: `${body.first_name || ""} ${body.last_name || ""}`.trim(),
+    phone: body.phone || "",
+    email: body.email || "",
+    project: body.project || "Website Inquiry",
+    source: "Contact Form 7",
+    notes: body.message || "",
+  },
+});
 
     return NextResponse.json({
       success: true,
