@@ -1,5 +1,6 @@
 import Sidebar from "../../components/Sidebar";
 import { prisma } from "../../lib/prisma";
+import Link from "next/link";
 
 export default async function LeadsPage() {
   const leads = await prisma.lead.findMany({
@@ -33,9 +34,17 @@ export default async function LeadsPage() {
               {leads.map((lead) => (
                 <tr
                   key={lead.id}
-                  className="border-t border-zinc-800"
+                  className="border-t border-zinc-800 hover:bg-zinc-800"
                 >
-                  <td className="p-4">{lead.fullName}</td>
+                  <td className="p-4">
+                    <Link
+                      href={`/leads/${lead.id}`}
+                      className="text-blue-400 hover:text-blue-300 underline"
+                    >
+                      {lead.fullName}
+                    </Link>
+                  </td>
+
                   <td className="p-4">{lead.phone}</td>
                   <td className="p-4">{lead.email}</td>
                   <td className="p-4">{lead.status}</td>
