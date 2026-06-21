@@ -22,6 +22,7 @@ export default async function LeadsPage() {
           <table className="w-full">
             <thead className="bg-zinc-800">
               <tr>
+                <th className="text-left p-4">Lead ID</th>
                 <th className="text-left p-4">Name</th>
                 <th className="text-left p-4">Phone</th>
                 <th className="text-left p-4">Email</th>
@@ -36,6 +37,10 @@ export default async function LeadsPage() {
                   key={lead.id}
                   className="border-t border-zinc-800 hover:bg-zinc-800"
                 >
+                  <td className="p-4 text-yellow-400 font-mono">
+                    {lead.leadId}
+                  </td>
+
                   <td className="p-4">
                     <Link
                       href={`/leads/${lead.id}`}
@@ -55,7 +60,7 @@ export default async function LeadsPage() {
               {leads.length === 0 && (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={6}
                     className="p-6 text-center text-gray-400"
                   >
                     No leads found
