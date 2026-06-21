@@ -5,18 +5,19 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    const callLog = await prisma.callLog.create({
+    const visit = await prisma.siteVisit.create({
       data: {
         leadId: body.leadId,
-        outcome: body.outcome,
-        summary: body.summary,
-        siteVisitResult: body.siteVisitResult || null,
+        visitDate: new Date(body.visitDate),
+        visitTime: body.visitTime,
+        executive: body.executive,
+        notes: body.notes || "",
       },
     });
 
     return NextResponse.json({
       success: true,
-      callLog,
+      visit,
     });
   } catch (error) {
     console.error(error);
@@ -24,7 +25,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         success: false,
-        error: "Failed to create call log",
+        error: "Failed to create site visit",
       },
       {
         status: 500,

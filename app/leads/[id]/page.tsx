@@ -19,6 +19,12 @@ export default async function LeadDetailsPage({
           createdAt: "desc",
         },
       },
+
+      siteVisits: {
+        orderBy: {
+          visitDate: "desc",
+        },
+      },
     },
   });
 
@@ -119,14 +125,67 @@ export default async function LeadDetailsPage({
             )}
           </div>
 
+          <div className="border-t border-zinc-700 pt-6">
+            <h2 className="text-xl font-bold mb-4">
+              Site Visits
+            </h2>
+
+            {lead.siteVisits.length === 0 ? (
+              <p className="text-gray-400">
+                No site visits scheduled
+              </p>
+            ) : (
+              <div className="space-y-4">
+                {lead.siteVisits.map((visit) => (
+                  <div
+                    key={visit.id}
+                    className="bg-zinc-800 p-4 rounded-lg"
+                  >
+                    <p>
+                      <strong>Date:</strong>{" "}
+                      {new Date(
+                        visit.visitDate
+                      ).toLocaleDateString()}
+                    </p>
+
+                    <p>
+                      <strong>Time:</strong>{" "}
+                      {visit.visitTime}
+                    </p>
+
+                    <p>
+                      <strong>Executive:</strong>{" "}
+                      {visit.executive}
+                    </p>
+
+                    <p>
+                      <strong>Status:</strong>{" "}
+                      {visit.status}
+                    </p>
+
+                    {visit.notes && (
+                      <p>
+                        <strong>Notes:</strong>{" "}
+                        {visit.notes}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           <div className="pt-6 flex gap-4">
             <button className="bg-green-600 hover:bg-green-700 px-5 py-3 rounded-lg">
               Call Now
             </button>
 
-            <button className="bg-yellow-600 hover:bg-yellow-700 px-5 py-3 rounded-lg">
+            <a
+              href={`/leads/${lead.id}/schedule`}
+              className="bg-yellow-600 hover:bg-yellow-700 px-5 py-3 rounded-lg"
+            >
               Schedule Visit
-            </button>
+            </a>
           </div>
 
         </div>
