@@ -13,6 +13,13 @@ export default async function LeadDetailsPage({
     where: {
       id,
     },
+    include: {
+      callLogs: {
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
+    },
   });
 
   if (!lead) {
@@ -77,6 +84,39 @@ export default async function LeadDetailsPage({
           <div>
             <p className="text-gray-400">Notes</p>
             <p>{lead.notes || "No notes available"}</p>
+          </div>
+
+          <div className="border-t border-zinc-700 pt-6">
+            <h2 className="text-xl font-bold mb-4">
+              Call History
+            </h2>
+
+            {lead.callLogs.length === 0 ? (
+              <p className="text-gray-400">
+                No call logs yet
+              </p>
+            ) : (
+              <div className="space-y-4">
+                {lead.callLogs.map((log) => (
+                  <div
+                    key={log.id}
+                    className="bg-zinc-800 p-4 rounded-lg"
+                  >
+                    <p>
+                      <strong>Outcome:</strong> {log.outcome}
+                    </p>
+
+                    <p>
+                      <strong>Summary:</strong> {log.summary}
+                    </p>
+
+                    <p className="text-sm text-gray-400 mt-2">
+                      {new Date(log.createdAt).toLocaleString()}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="pt-6 flex gap-4">
