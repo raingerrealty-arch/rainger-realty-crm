@@ -23,11 +23,53 @@ export async function POST(request: Request) {
       );
     }
 
+    const outcome = body.outcome || "Follow Up";
+
+    let status = "Contacted";
+    let temperature = "Warm";
+
+    let nextFollowUpDate: Date | null = null;
+
+    const today = new Date();
+
+    if (outcome === "Interested") {
+      status = "Interested";
+      temperature = "Hot";
+
+      nextFollowUpDate = new Date(today);
+      nextFollowUpDate.setDate(today.getDate() + 2);
+    }
+
+    if (outcome === "Follow Up") {
+      status = "Follow Up";
+      temperature = "Warm";
+
+      nextFollowUpDate = new Date(today);
+      nextFollowUpDate.setDate(today.getDate() + 7);
+    }
+
+    if (outcome === "Not Interested") {
+      status = "Closed";
+      temperature = "Cold";
+    }
+
     const callLog = await prisma.callLog.create({
       data: {
         leadId: lead.id,
-        outcome: body.outcome,
+        outcome,
         summary: body.summary,
+      },
+    });
+
+    await prisma.lead.update({
+      where: {
+        id: lead.id,
+      },
+      data: {
+        status,
+        temperature,
+        purpose: body.purpose || null,
+        nextFollowUpDate,
       },
     });
 

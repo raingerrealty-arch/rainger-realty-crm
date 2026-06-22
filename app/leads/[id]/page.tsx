@@ -87,9 +87,59 @@ export default async function LeadDetailsPage({
           </div>
 
           <div>
-            <p className="text-gray-400">Notes</p>
-            <p>{lead.notes || "No notes available"}</p>
-          </div>
+  <p className="text-gray-400">Notes</p>
+  <p>{lead.notes || "No notes available"}</p>
+</div>
+
+<div>
+  <p className="text-gray-400">City</p>
+  <p>{lead.city || "Not Provided"}</p>
+</div>
+
+<div>
+  <p className="text-gray-400">Country</p>
+  <p>{lead.country || "Not Provided"}</p>
+</div>
+
+<div>
+  <p className="text-gray-400">Property Type</p>
+  <p>{lead.propertyType || "Not Provided"}</p>
+</div>
+
+<div>
+  <p className="text-gray-400">Property Interested</p>
+  <p>{lead.propertyInterested || "Not Provided"}</p>
+</div>
+
+<div>
+  <p className="text-gray-400">Budget</p>
+  <p>{lead.budget || "Not Provided"}</p>
+</div>
+
+<div>
+  <p className="text-gray-400">Quoted Price</p>
+  <p>{lead.quotedPrice || "Not Provided"}</p>
+</div>
+
+<div>
+  <p className="text-gray-400">Unit Price</p>
+  <p>{lead.unitPrice || "Not Provided"}</p>
+</div>
+
+<div>
+  <p className="text-gray-400">Purpose</p>
+  <p>{lead.purpose || "Not Provided"}</p>
+</div>
+
+<div>
+  <p className="text-gray-400">Next Follow Up</p>
+  <p>
+    {lead.nextFollowUpDate
+      ? new Date(lead.nextFollowUpDate).toLocaleDateString()
+      : "Not Scheduled"}
+  </p>
+</div>
+          
 
           <div className="border-t border-zinc-700 pt-6">
             <h2 className="text-xl font-bold mb-4">
