@@ -5,12 +5,29 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
+    const lead = await prisma.lead.findFirst({
+      where: {
+        leadId: body.leadId,
+      },
+    });
+
+    if (!lead) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Lead not found",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+
     const callLog = await prisma.callLog.create({
       data: {
-        leadId: body.leadId,
+        leadId: lead.id,
         outcome: body.outcome,
         summary: body.summary,
-        siteVisitResult: body.siteVisitResult || null,
       },
     });
 

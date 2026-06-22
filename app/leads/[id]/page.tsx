@@ -1,4 +1,5 @@
 import Sidebar from "../../../components/Sidebar";
+import CallNowButton from "../../../components/CallNowButton";
 import { prisma } from "../../../lib/prisma";
 import { notFound } from "next/navigation";
 
@@ -19,7 +20,6 @@ export default async function LeadDetailsPage({
           createdAt: "desc",
         },
       },
-
       siteVisits: {
         orderBy: {
           visitDate: "desc",
@@ -42,7 +42,6 @@ export default async function LeadDetailsPage({
         </h1>
 
         <div className="bg-zinc-900 rounded-xl p-6 space-y-4">
-
           <div>
             <p className="text-gray-400">Lead ID</p>
             <p className="text-yellow-400 font-mono">
@@ -176,9 +175,7 @@ export default async function LeadDetailsPage({
           </div>
 
           <div className="pt-6 flex gap-4">
-            <button className="bg-green-600 hover:bg-green-700 px-5 py-3 rounded-lg">
-              Call Now
-            </button>
+            <CallNowButton leadId={lead.id} />
 
             <a
               href={`/leads/${lead.id}/schedule`}
@@ -187,7 +184,6 @@ export default async function LeadDetailsPage({
               Schedule Visit
             </a>
           </div>
-
         </div>
       </div>
     </main>
