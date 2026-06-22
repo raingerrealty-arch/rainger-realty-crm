@@ -12,20 +12,48 @@ export async function POST(request: Request) {
     const body = await request.json();
 
     const lead = await prisma.lead.upsert({
-  where: {
-    leadId: body.submission_id || Date.now().toString(),
-  },
-  update: {},
-  create: {
-    leadId: body.submission_id || Date.now().toString(),
-    fullName: `${body.first_name || ""} ${body.last_name || ""}`.trim(),
-    phone: body.phone || "",
-    email: body.email || "",
-    project: body.project || "Website Inquiry",
-    source: "Contact Form 7",
-    notes: body.message || "",
-  },
-});
+      where: {
+        leadId: body.submission_id || Date.now().toString(),
+      },
+
+      update: {},
+
+      create: {
+        leadId: body.submission_id || Date.now().toString(),
+
+        fullName: `${body.first_name || ""} ${body.last_name || ""}`.trim(),
+
+        phone: body.phone || "",
+
+        email: body.email || "",
+
+        source: body.source || "Website",
+
+        project: body.project || "Website Inquiry",
+
+        city: body.city || "",
+
+        country: body.country || "",
+
+        propertyType: body.propertyType || "",
+
+        propertyInterested: body.propertyInterested || "",
+
+        budget: body.budget || "",
+
+        quotedPrice: body.quotedPrice || "",
+
+        unitPrice: body.unitPrice || "",
+
+        purpose: body.purpose || "",
+
+        notes: body.message || "",
+
+        status: "New",
+
+        temperature: "Warm",
+      },
+    });
 
     return NextResponse.json({
       success: true,

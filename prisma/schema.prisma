@@ -1,66 +1,85 @@
 generator client {
-  provider = "prisma-client-js"
+provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+provider = "postgresql"
+url      = env("DATABASE_URL")
 }
 
 model Lead {
-  id          String      @id @default(cuid())
-  leadId      String      @unique
-  fullName    String
-  phone       String
-  email       String?
-  project     String
-  source      String
-  budget      String?
-  notes       String?
-  status      String      @default("New")
-  temperature String      @default("Warm")
-  assignedTo  String?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+id          String      @id @default(cuid())
+leadId      String      @unique
 
-  callLogs    CallLog[]
-  siteVisits  SiteVisit[]
+fullName    String
+phone       String
+email       String?
+
+source      String
+project     String
+
+city        String?
+country     String?
+
+propertyType       String?
+propertyInterested String?
+
+budget      String?
+quotedPrice String?
+unitPrice   String?
+
+purpose     String?
+
+notes       String?
+
+status      String      @default("New")
+temperature String      @default("Warm")
+
+assignedTo  String?
+
+nextFollowUpDate DateTime?
+
+createdAt   DateTime    @default(now())
+updatedAt   DateTime    @updatedAt
+
+callLogs    CallLog[]
+siteVisits  SiteVisit[]
 }
 
 model CallLog {
-  id              String   @id @default(cuid())
-  leadId          String
-  callDate        DateTime @default(now())
-  outcome         String
-  summary         String
-  siteVisitResult String?
+id              String   @id @default(cuid())
+leadId          String
+callDate        DateTime @default(now())
+outcome         String
+summary         String
+siteVisitResult String?
 
-  lead Lead @relation(fields: [leadId], references: [id])
+lead Lead @relation(fields: [leadId], references: [id])
 
-  createdAt DateTime @default(now())
+createdAt DateTime @default(now())
 }
 
 model SiteVisit {
-  id         String   @id @default(cuid())
-  leadId     String
-  visitDate  DateTime
-  visitTime  String
-  executive  String
-  status     String   @default("Scheduled")
-  notes      String?
+id         String   @id @default(cuid())
+leadId     String
+visitDate  DateTime
+visitTime  String
+executive  String
+status     String   @default("Scheduled")
+notes      String?
 
-  lead Lead @relation(fields: [leadId], references: [id])
+lead Lead @relation(fields: [leadId], references: [id])
 
-  createdAt DateTime @default(now())
+createdAt DateTime @default(now())
 }
 
 model Settings {
-  id                String   @id @default(cuid())
-  companyName       String
-  logo              String?
-  elevenlabsAgentId String?
-  elevenlabsWebhook String?
-  makeWebhook       String?
+id                String   @id @default(cuid())
+companyName       String
+logo              String?
+elevenlabsAgentId String?
+elevenlabsWebhook String?
+makeWebhook       String?
 
-  createdAt DateTime @default(now())
+createdAt DateTime @default(now())
 }
