@@ -16,6 +16,7 @@ export async function POST(request: Request) {
     try {
       body = await request.json();
       console.log("REQUEST BODY RECEIVED");
+      console.log(body);
     } catch {
       console.log("INVALID JSON RECEIVED");
 
@@ -89,11 +90,16 @@ export async function POST(request: Request) {
     console.log("IMPORT COMPLETE");
     console.log("Lead ID:", lead.id);
     console.log("Lead Number:", lead.leadId);
+
+    const dispatcherUrl =
+      "https://rainger-realty-crm.vercel.app/api/dispatcher";
+
+    console.log("Dispatcher URL:", dispatcherUrl);
     console.log("Calling Dispatcher...");
 
     try {
       const dispatcherResponse = await fetch(
-        `https://rainger-realty-crm.vercel.app/api/dispatcher`,
+        dispatcherUrl,
         {
           method: "POST",
           headers: {
@@ -111,13 +117,13 @@ export async function POST(request: Request) {
         dispatcherResponse.status
       );
 
-      const dispatcherResult =
+      const responseText =
         await dispatcherResponse.text();
 
       console.log(
-        "Dispatcher Response:",
-        dispatcherResult
+        "Dispatcher Response:"
       );
+      console.log(responseText);
 
       console.log(
         "Dispatcher Request Sent"
