@@ -2,6 +2,7 @@ import Sidebar from "../../../components/Sidebar";
 import CallNowButton from "../../../components/CallNowButton";
 import { prisma } from "../../../lib/prisma";
 import { notFound } from "next/navigation";
+import LeadEditor from "../../../components/LeadEditor";
 
 export default async function LeadDetailsPage({
   params,
@@ -76,15 +77,7 @@ export default async function LeadDetailsPage({
             <p>{lead.source}</p>
           </div>
 
-          <div>
-            <p className="text-gray-400">Status</p>
-            <p>{lead.status}</p>
-          </div>
-
-          <div>
-            <p className="text-gray-400">Temperature</p>
-            <p>{lead.temperature}</p>
-          </div>
+          <LeadEditor lead={lead} />
 
           <div>
   <p className="text-gray-400">Notes</p>
@@ -223,7 +216,13 @@ export default async function LeadDetailsPage({
               </div>
             )}
           </div>
+<div className="border-t border-zinc-700 pt-6">
+  <h2 className="text-xl font-bold mb-4">
+    Edit Lead
+  </h2>
 
+  <LeadEditor lead={lead} />
+</div>
           <div className="pt-6 flex gap-4">
             <CallNowButton leadId={lead.id} />
 
