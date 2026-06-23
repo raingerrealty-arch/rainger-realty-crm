@@ -47,7 +47,7 @@ export async function POST(request: Request) {
     console.log("Current IST Hour:", hour);
 
     const autoCallAllowed =
-      hour >= 11 && hour < 17;
+      const autoCallAllowed = true;
 
     if (!autoCallAllowed) {
       console.log(
