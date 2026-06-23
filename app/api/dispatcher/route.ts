@@ -46,8 +46,17 @@ export async function POST(request: Request) {
 
     console.log("Current IST Hour:", hour);
 
-    const autoCallAllowed =
-      const autoCallAllowed = true;
+    const autoCallAllowed = true;
+
+if (!autoCallAllowed) {
+  console.log("Outside Calling Window");
+
+  return NextResponse.json({
+    success: true,
+    autoCall: false,
+    message: "Outside auto-calling window",
+  });
+}
 
     if (!autoCallAllowed) {
       console.log(
