@@ -44,32 +44,24 @@ export async function POST(request: Request) {
 
     const hour = indiaTime.getHours();
 
-    console.log("Current IST Hour:", hour);
+console.log("Current IST Hour:", hour);
 
-    const autoCallAllowed = true;
+// Auto-calling only between 11:00 AM IST and 5:00 PM IST
+const autoCallAllowed =
+  hour >= 11 && hour < 17;
 
 if (!autoCallAllowed) {
-  console.log("Outside Calling Window");
+  console.log(
+    "Outside Calling Window"
+  );
 
   return NextResponse.json({
     success: true,
     autoCall: false,
-    message: "Outside auto-calling window",
+    message:
+      "Outside auto-calling window",
   });
 }
-
-    if (!autoCallAllowed) {
-      console.log(
-        "Outside Calling Window"
-      );
-
-      return NextResponse.json({
-        success: true,
-        autoCall: false,
-        message:
-          "Outside auto-calling window",
-      });
-    }
 
     console.log(
       "Inside Calling Window"
