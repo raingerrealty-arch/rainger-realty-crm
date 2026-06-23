@@ -62,16 +62,15 @@ export async function POST(request: Request) {
     });
 
     await prisma.lead.update({
-      where: {
-        id: lead.id,
-      },
-      data: {
-        status,
-        temperature,
-        purpose: body.purpose || null,
-        nextFollowUpDate,
-      },
-    });
+  where: {
+    id: lead.id,
+  },
+  data: {
+    status,
+    temperature,
+    nextFollowUpDate,
+  },
+});
 
     return NextResponse.json({
       success: true,
