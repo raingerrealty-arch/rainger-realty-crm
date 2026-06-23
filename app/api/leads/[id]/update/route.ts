@@ -25,10 +25,21 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({
-      success: true,
-      updatedLead,
-    });
+    await fetch(
+  "https://hook.eu1.make.com/2n4solc94v192a0pkyl2e95hu4ck6ptf",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedLead),
+  }
+);
+
+return NextResponse.json({
+  success: true,
+  lead: updatedLead,
+});
   } catch (error) {
     console.error(error);
 
