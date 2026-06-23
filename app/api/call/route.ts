@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../lib/prisma";
+import { makeCall } from "../../../lib/elevenlabs";
 
 export async function POST(request: Request) {
   try {
@@ -23,75 +24,36 @@ export async function POST(request: Request) {
       );
     }
 
-    const outcomes = [
-      {
-        outcome: "Interested",
-        summary:
-          "Lead showed strong interest and wants more information.",
-        status: "Interested",
-        nextFollowUpDays: 2,
-      },
-      {
-        outcome: "Follow Up",
-        summary:
-          "Lead requested a follow-up call next week.",
-        status: "Follow Up",
-        nextFollowUpDays: 7,
-      },
-      {
-        outcome: "Not Interested",
-        summary:
-          "Lead is not interested at this time.",
-        status: "Not Interested",
-        nextFollowUpDays: null,
-      },
-      {
-        outcome: "Site Visit Requested",
-        summary:
-          "Lead requested a site visit.",
-        status: "Site Visit",
-        nextFollowUpDays: 1,
-      },
-    ];
-
-    const aiResult =
-      outcomes[Math.floor(Math.random() * outcomes.length)];
-
-    let nextFollowUpDate: Date | null = null;
-
-    if (aiResult.nextFollowUpDays) {
-      nextFollowUpDate = new Date();
-
-      nextFollowUpDate.setDate(
-        nextFollowUpDate.getDate() +
-          aiResult.nextFollowUpDays
-      );
-    }
-
+    // Create call initiation log
     const callLog = await prisma.callLog.create({
       data: {
         leadId: lead.id,
-        outcome: aiResult.outcome,
-        summary: aiResult.summary,
+        outcome: "Calling",
+        summary:
+          "AI outbound call initiated and waiting for completion.",
       },
     });
 
+    // Update lead status
     await prisma.lead.update({
       where: {
         id: lead.id,
       },
       data: {
-        status: aiResult.status,
-        notes: aiResult.summary,
-        nextFollowUpDate,
+        status: "Calling",
       },
     });
 
+   await makeCall({
+  leadId: lead.leadId,
+  name: lead.fullName,
+  phone: lead.phone,
+});
+
     return NextResponse.json({
       success: true,
+      message: "Call initiated",
       callLog,
-      aiResult,
-      nextFollowUpDate,
     });
   } catch (error) {
     console.error(error);
@@ -99,7 +61,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         success: false,
-        error: "Failed to start call",
+        error: "Failed to initiate call",
       },
       {
         status: 500,
