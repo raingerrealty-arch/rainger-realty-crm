@@ -93,7 +93,7 @@ export async function POST(request: Request) {
 
     try {
       const dispatcherResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/dispatcher`,
+        `https://rainger-realty-crm.vercel.app/api/dispatcher`,
         {
           method: "POST",
           headers: {
