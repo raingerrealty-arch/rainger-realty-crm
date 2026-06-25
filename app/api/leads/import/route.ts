@@ -45,10 +45,9 @@ export async function POST(request: Request) {
           body.submission_id ||
           Date.now().toString(),
 
-        fullName: `${body.first_name || ""} ${
-          body.last_name || ""
-        }`.trim(),
-
+        fullName:
+  body.fullName ||
+  `${body.first_name || ""} ${body.last_name || ""}`.trim(),
         phone: body.phone || "",
 
         email: body.email || "",
