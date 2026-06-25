@@ -48,15 +48,6 @@ export default async function Home() {
 
             <div className="bg-zinc-900 rounded-xl p-6">
               <h2 className="text-gray-400">
-                AI Calls
-              </h2>
-              <p className="text-3xl font-bold">
-                0
-              </p>
-            </div>
-
-            <div className="bg-zinc-900 rounded-xl p-6">
-              <h2 className="text-gray-400">
                 Site Visits
               </h2>
               <p className="text-3xl font-bold">
