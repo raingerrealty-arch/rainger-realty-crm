@@ -68,16 +68,8 @@ if (!autoCallAllowed) {
     );
 
     console.log(
-      "Waiting 45 seconds..."
-    );
-
-    await new Promise((resolve) =>
-      setTimeout(resolve, 45000)
-    );
-
-    console.log(
-      "45 Second Delay Complete"
-    );
+  "Delay disabled for testing"
+);
 
     console.log(
       "READY FOR ELEVENLABS CALL"
