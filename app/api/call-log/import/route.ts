@@ -4,6 +4,8 @@ import { prisma } from "../../../../lib/prisma";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    console.log("BODY RECEIVED");
+console.log(JSON.stringify(body, null, 2));
 
     const lead = await prisma.lead.findFirst({
       where: {
