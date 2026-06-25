@@ -44,45 +44,37 @@ export async function POST(request: Request) {
 
     const hour = indiaTime.getHours();
 
-console.log("Current IST Hour:", hour);
+    console.log("Current IST Hour:", hour);
 
-// Auto-calling only between 11:00 AM IST and 5:00 PM IST
-const autoCallAllowed =
-  hour >= 11 && hour < 17;
+    // Auto-calling only between 11:00 AM IST and 5:00 PM IST
+    const autoCallAllowed =
+      hour >= 11 && hour < 17;
 
-if (!autoCallAllowed) {
-  console.log(
-    "Outside Calling Window"
-  );
+    if (!autoCallAllowed) {
+      console.log("Outside Calling Window");
 
-  return NextResponse.json({
-    success: true,
-    autoCall: false,
-    message:
-      "Outside auto-calling window",
-  });
-}
+      return NextResponse.json({
+        success: true,
+        autoCall: false,
+        message:
+          "Outside auto-calling window",
+      });
+    }
 
-    console.log(
-      "Inside Calling Window"
-    );
-
-    console.log(
-  "Delay disabled for testing"
-);
-
-    console.log(
-      "READY FOR ELEVENLABS CALL"
-    );
-
+    console.log("Inside Calling Window");
+    console.log("READY FOR ELEVENLABS CALL");
     console.log("=================================");
 
     return NextResponse.json({
       success: true,
       autoCall: true,
+      leadId: lead.id,
+      phone: lead.phone,
+      name: lead.fullName,
       message:
         "Dispatcher completed successfully",
     });
+
   } catch (error) {
     console.error(
       "Dispatcher Error:",
